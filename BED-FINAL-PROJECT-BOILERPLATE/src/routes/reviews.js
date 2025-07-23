@@ -20,19 +20,17 @@ router.get("/", async (req, res, next) => {
 router.post("/", auth, async (req, res, next) => {
   try {
     const { userId, propertyId, rating, comment } = req.body;
-    const newReview = createReview(
-      userId,
-      propertyId,
-      rating,
-      comment
-    );
+    const review = await createReview(userId, propertyId, rating, comment);
     res.status(201).json({
       message: "Review successfully created!",
-      review;
+      review,
+    });
   } catch (error) {
     next(error);
   }
 });
+
+
 
 router.get("/:id", async (req, res, next) => {
   try {
