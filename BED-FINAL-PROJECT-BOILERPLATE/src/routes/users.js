@@ -9,7 +9,7 @@ import auth from "../middleware/auth.js";
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-  try 
+  try {
     const { username } = req.query;
     const users = await getUsers(username);
     res.json(users);
@@ -22,7 +22,7 @@ router.post("/", auth, async (req, res, next) => {
   try {
     const { username, password, name, email, phoneNumber, profilePicture } =
       req.body;
-    const newUser = createUser(
+    const newUser = await createUser(
       username,
       password,
       name,
