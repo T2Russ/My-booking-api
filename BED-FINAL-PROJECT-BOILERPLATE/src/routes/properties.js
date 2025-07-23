@@ -10,7 +10,7 @@ const router = Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const properties = await getProperties();
+    const properties = await getProperties(req.query);
     res.json(properties);
   } catch (error) {
     next(error);
