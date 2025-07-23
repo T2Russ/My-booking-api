@@ -29,6 +29,7 @@ router.post("/", auth, async (req, res, next) => {
       totalPrice,
       bookingStatus,
     } = req.body;
+
     const newBooking = await createBooking(
       userId,
       propertyId,
@@ -38,11 +39,16 @@ router.post("/", auth, async (req, res, next) => {
       totalPrice,
       bookingStatus
     );
-    res.status(201).json(newBooking);
+
+    res.status(201).json({
+      message: "Booking successfully created!",
+      booking: newBooking,
+    });
   } catch (error) {
     next(error);
   }
 });
+;
 
 router.get("/:id", async (req, res, next) => {
   try {
