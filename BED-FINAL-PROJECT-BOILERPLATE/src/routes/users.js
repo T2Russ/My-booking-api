@@ -9,8 +9,9 @@ import auth from "../middleware/auth.js";
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-  try {
-    const users = await getUsers();
+  try 
+    const { username } = req.query;
+    const users = await getUsers(username);
     res.json(users);
   } catch (error) {
     next(error);
