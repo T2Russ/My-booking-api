@@ -10,7 +10,7 @@ const router = Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const reviews = await getReviews();
+    const reviews = await getReviews(req.query);
     res.json(reviews);
   } catch (error) {
     next(error);
