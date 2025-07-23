@@ -20,8 +20,15 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", auth, async (req, res, next) => {
   try {
-    const { username, password, name, email, phoneNumber, profilePicture } =
-      req.body;
+    const {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+    } = req.body;
+
     const newUser = await createUser(
       username,
       password,
@@ -30,11 +37,16 @@ router.post("/", auth, async (req, res, next) => {
       phoneNumber,
       profilePicture
     );
-    res.status(201).json(newUser);
+
+    res.status(201).json({
+      message: "New user successfully created!",
+      user: newUser,
+    });
   } catch (error) {
     next(error);
   }
 });
+
 
 router.get("/:id", async (req, res, next) => {
   try {
