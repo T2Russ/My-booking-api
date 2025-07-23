@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", auth, async (req, res, next) => {
+  router.post("/", auth, async (req, res, next) => {
   try {
     const {
       title,
@@ -30,6 +30,7 @@ router.post("/", auth, async (req, res, next) => {
       hostId,
       rating,
     } = req.body;
+
     const newProperty = await createProperty(
       title,
       description,
@@ -41,11 +42,16 @@ router.post("/", auth, async (req, res, next) => {
       hostId,
       rating
     );
-    res.status(201).json(newProperty);
+
+    res.status(201).json({
+      message: "Property successfully created!",
+      property: newProperty,
+    });
   } catch (error) {
     next(error);
   }
 });
+
 
 router.get("/:id", async (req, res, next) => {
   try {
