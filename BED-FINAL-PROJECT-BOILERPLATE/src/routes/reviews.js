@@ -26,7 +26,9 @@ router.post("/", auth, async (req, res, next) => {
       rating,
       comment
     );
-    res.status(201).json(newReview);
+    res.status(201).json({
+      message: "Review successfully created!",
+      review;
   } catch (error) {
     next(error);
   }
