@@ -37,7 +37,10 @@ router.post("/", auth, async (req, res, next) => {
       profilePicture,
       aboutMe
     );
-    res.status(201).json(newHost);
+    res.status(201).json({
+      message: "Host successfully created!"'
+        host
+  };
   } catch (error) {
     next(error);
   }
