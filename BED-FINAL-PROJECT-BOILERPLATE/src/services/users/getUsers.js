@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 
-const getUsers = async () => {
-  const prisma = new PrismaClient();
-  const users = await prisma.user.findMany();
+const getUsers = async (username) => {
+  const where = username
+    ? { username: { contains: username, mode: "insensitive" } }
+    : {};
 
+  const users = await prisma.user.findMany({ where });
   return users;
 };
-
-export default getUsers;
