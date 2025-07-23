@@ -1,4 +1,5 @@
-const prisma = new PrismaClient();
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient(); // initialized once and reused, other versions failed the tests
 
 const getUsers = async (username) => {
   const where = username
@@ -8,3 +9,5 @@ const getUsers = async (username) => {
   const users = await prisma.user.findMany({ where });
   return users;
 };
+
+export default getUsers;
