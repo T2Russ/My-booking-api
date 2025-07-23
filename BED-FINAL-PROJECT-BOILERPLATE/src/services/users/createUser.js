@@ -11,7 +11,6 @@ const createUser = async (
   const prisma = new PrismaClient();
 
   const newUser = {
-    id,
     username,
     password,
     name,
