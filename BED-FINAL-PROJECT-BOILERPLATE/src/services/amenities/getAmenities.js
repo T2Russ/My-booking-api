@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
+
 const getAmenities = async () => {
-  const prisma = new PrismaClient();
   const amenities = await prisma.amenity.findMany();
 
   return amenities;
