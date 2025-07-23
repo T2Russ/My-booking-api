@@ -29,7 +29,8 @@ router.post("/", auth, async (req, res, next) => {
       profilePicture,
       aboutMe,
     } = req.body;
-    const newHost = createHost(
+
+    const host = await createHost(
       username,
       password,
       name,
@@ -38,10 +39,11 @@ router.post("/", auth, async (req, res, next) => {
       profilePicture,
       aboutMe
     );
+
     res.status(201).json({
-      message: "Host successfully created!"'
-        host
-  };
+      message: "Host successfully created!",
+      host,
+    });
   } catch (error) {
     next(error);
   }
