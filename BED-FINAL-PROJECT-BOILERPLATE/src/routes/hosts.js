@@ -30,7 +30,13 @@ router.post("/", auth, async (req, res, next) => {
       aboutMe,
     } = req.body;
 
-    const host = await createHost(
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ message: "Username and password are required" });
+    }
+
+    const newHost = await createHost(
       username,
       password,
       name,
@@ -41,13 +47,14 @@ router.post("/", auth, async (req, res, next) => {
     );
 
     res.status(201).json({
-      message: "Host successfully created!",
-      host,
+      message: "New host successfully created!",
+      host: newHost,
     });
   } catch (error) {
     next(error);
   }
 });
+
 
 router.get("/:id", async (req, res, next) => {
   try {
