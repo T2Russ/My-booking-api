@@ -1,19 +1,29 @@
 import { PrismaClient } from "@prisma/client";
- 
 const prisma = new PrismaClient();
 
-const getProperties = async (filters) => {
-  const where = {};
-
-  if (filters.location) {
-    where.location = { contains: filters.location, mode: "insensitive" };
+const getProperties = async (location, pricePerNight) => {
+  if (!location && !pricePerNight) {
+    throw Object.assign(
+      new Error("Missing query parameter: location or pricePerNight"),
+      { statusCode: 400 }
+    );
   }
 
-  if (filters.pricePerNight) {
-    where.pricePerNight = parseFloat(filters.pricePerNight);
+  const filters = {};
+  if (location) {
+    filters.location = {
+      equals: location,
+      mode: "insensitive",
+    };
+  }
+  if (pricePerNight) {
+    filters.pricePerNight = parseFloat(pricePerNight);
   }
 
-  const properties = await prisma.property.findMany({ where });
+  const properties = await prisma.property.findMany({
+    where: filters,
+  });
+
   return properties;
 };
 
