@@ -1,12 +1,22 @@
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient(); // initialized once and reused, other versions failed the tests
+const prisma = new PrismaClient();
 
 const getUsers = async (username) => {
-  const where = username
-    ? { username: { contains: username, mode: "insensitive" } }
-    : {};
+  if (!username) {
+    throw Object.assign(new Error("Missing query parameter: username"), {
+      statusCode: 400,
+    });
+  }
 
-  const users = await prisma.user.findMany({ where });
+  const users = await prisma.user.findMany({
+    where: {
+      username: {
+        equals: username,
+        mode: "insensitive",
+      },
+    },
+  });
+
   return users;
 };
 
